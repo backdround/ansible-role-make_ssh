@@ -1,0 +1,16 @@
+---
+- name: Generate ssh config content
+  set_fact:
+    make_ssh_config: |
+      Host {{ make_ssh_server_name }}
+        User {{ make_ssh_server_user }}
+        HostName {{ make_ssh_server_address }}
+        Port {{ make_ssh_server_port }}
+        IdentityFile "{{ make_ssh_key_path }}"
+
+- name: Create ssh config
+  local_action:
+    module: copy
+    dest: "{{ make_ssh_config_path }}"
+    content: "{{ make_ssh_config }}"
+...

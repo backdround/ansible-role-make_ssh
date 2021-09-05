@@ -1,0 +1,13 @@
+---
+- name: Get settings
+  set_fact:
+    # SSH config data.
+    make_ssh_server_name: "{{ make_ssh_node_name }}"
+    make_ssh_server_user: "{{ ansible_user }}"
+    make_ssh_server_address: "{{ ansible_host }}"
+    make_ssh_server_port: "{{ ansible_port | default(22) }}"
+
+    # SSH file locations.
+    make_ssh_config_path: "{{ make_ssh_directory }}/{{ make_ssh_config_filename }}"
+    make_ssh_key_path: "{{ make_ssh_directory }}/{{ make_ssh_key_filename }}"
+...

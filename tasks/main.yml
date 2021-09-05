@@ -1,0 +1,13 @@
+---
+- name: Load settings
+  include_tasks: get_settings.yml
+
+- name: Check asserts
+  include_tasks: asserts.yml
+
+- name: Make ssh config
+  include_tasks: make_config.yml
+
+- name: Make ssh keys
+  include_tasks: make_keys.yml
+...

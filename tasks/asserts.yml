@@ -1,0 +1,37 @@
+---
+- name: Check ssh connection
+  assert:
+    fail_msg: "Ansible_connection must be \"ssh\""
+    quiet: true
+    that: ansible_connection == "ssh"
+
+
+- name: Get server_address identity in config (if exist)
+  local_action:
+    module: command
+    argv:
+      - grep
+      - "-x"
+      - "  HostName {{ make_ssh_server_address }}"
+      - "{{ make_ssh_config_path }}"
+  register: check_server_address_result
+  changed_when: false
+  failed_when: false
+
+- name: Check server_address identity
+  assert:
+    fail_msg: "Config file already exist with different server_address."
+    success_msg: "Config file with different server_address doesn't exist."
+    quiet: true
+    that:
+      # Fail if config exist and server_address isn't currently used.
+      - check_server_address_result.rc != 1
+
+
+- name: Ensure ssh directory exist
+  local_action:
+    module: file
+    path: "{{ make_ssh_directory }}"
+    state: directory
+    mode: 0700
+...

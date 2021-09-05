@@ -1,0 +1,7 @@
+---
+make_ssh_node_name: "{{ ansible_facts.hostname }}"
+
+make_ssh_directory: "~/.ssh/servers/{{ make_ssh_node_name }}"
+make_ssh_config_filename: "config"
+make_ssh_key_filename: "id_rsa"
+...

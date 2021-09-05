@@ -1,0 +1,13 @@
+---
+- name: Create ssh keys
+  local_action:
+    module: community.crypto.openssh_keypair
+    path: "{{ make_ssh_key_path }}"
+  register: create_ssh_key_result
+
+- name: Import ssh key
+  ansible.posix.authorized_key:
+    user: "{{ make_ssh_server_user }}"
+    key: "{{ create_ssh_key_result.public_key }}"
+    state: present
+...
